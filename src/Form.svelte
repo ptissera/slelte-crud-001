@@ -2,21 +2,16 @@
     import { createEventDispatcher } from 'svelte';
 
 const dispatch = createEventDispatcher();
-	export let product = {
-		id: "",
-		name: "",
-		description: "",
-		category: "",
-		imageURL: "",
-	};
-	const cleanProduct = () => {
-		product = {
+    const PRODUCT = {
 			id: "",
 			name: "",
 			description: "",
-			category: "",
+			category: "laptops",
 			imageURL: "",
 		};
+	export let product = {...PRODUCT};
+	const cleanProduct = () => {
+		product = {...PRODUCT};
 	};
     const onSubmitHandler = () => {
         dispatch('submit', {
@@ -29,13 +24,14 @@ const dispatch = createEventDispatcher();
 <div class="card bg-primary shadow-soft border-light mt-3">
     <div class="card-body">
         <form on:submit|preventDefault="{onSubmitHandler}">
-            <h4>Create product</h4>
+            <h4>{product.id?'Update': 'Create'} product</h4>
             <div class="form-group">
                 <input
                     type="text"
                     class="form-control"
                     bind:value={product.name}
                     placeholder="Product name"
+                    required
                     id="product-name"
                 />
             </div>
